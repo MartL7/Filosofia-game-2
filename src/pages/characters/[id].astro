@@ -1,0 +1,348 @@
+---
+import { filosofos } from '../../const/filosofos'
+import Modal from '../../components/Modal.astro'
+import Layout from '../../layouts/Layout.astro'
+import GamePad from '../../components/GamePad.astro'
+
+const { id } = Astro.params
+
+const filosofo = filosofos.find((f) => f.id === id)
+
+console.log(filosofo)
+const { phrases, phrases2, escenaryImage1, name } = filosofo || {}
+---
+
+<Layout title="Juego del Filosofo" backgroundImage={escenaryImage1}>
+  <section class="flex gap-x-10 justify-center w-full min-h-[400px] h-[400px] lg:w-full lg:min-h-screen relative mb-10 lg:mb-0" id="container-board" data-name={name} data-phrases={phrases2}>
+
+   <div class="flex justify-center flex-col gap-y-10">
+    <h2 class="flex justify-center text-center text-3xl gap-x-5 text-purple-300"> 
+      Nivel 
+      <span id="level" class="text-pink-400/90"> 1 </span>
+    </h2>
+
+    <h2 class="flex justify-center text-center items-center text-3xl gap-x-5 text-purple-300/90 "> 
+      Cofres Abiertos 
+      <span id="openCofres" class="text-pink-400/90"> 0 </span>
+    </h2>
+   </div>
+
+    <canvas id="gameCanvas" width="900" height="600" class="border"></canvas>
+
+  </section>
+
+  <GamePad />
+
+  <Modal className='clip-dialog' id='close-dialog'>
+    <article class="flex justify-center items-center flex-col">
+      <img
+        decoding="async"
+        src={filosofo?.imagePresentation}
+        alt="Imagen del Filosofo"
+        class="h-[200px]"
+        id="filosofo"
+        style="mask-image: linear-gradient(black 50%, transparent);"
+      />
+
+      <section class="flex flex-col text-center justify-center items-center  border border-white size-full rounded-lg px-3">
+  
+        <h2 class="text-red-400/90 font-bold"> Frase de {name} </h2>
+  
+        <p class="text-pretty text-green-300/70" id="text-showing">
+        </p>
+      </section>
+    </article>
+  </Modal>
+
+</Layout>
+
+<script>
+  import { $, $$ } from '../../lib/dom-selector'
+  import confetti from 'canvas-confetti'
+
+  const $container = $('#container-board') as HTMLElement
+  const $modal = $('.clip-dialog') as HTMLDialogElement
+  const $textShowing = $('#text-showing') as HTMLParagraphElement
+  const $textLevel = $('#level') as HTMLSpanElement
+  const $textOpenCofres = $('#openCofres') as HTMLSpanElement
+  const $buttonClose = $('#close-dialog') as HTMLButtonElement
+
+  const canvas = $('#gameCanvas') as HTMLCanvasElement
+  const ctx = canvas.getContext('2d')
+
+  const { name } = $container.dataset
+  const secondName = name?.split(' ').at(-1)
+
+  const { phrases } = $container.dataset
+  const phrasesArray = phrases?.split(',')
+
+  const limitCofres = 8
+  let openCofres = 0
+  let allCofresOpen = false
+  let levelGame = 1
+
+  // Controladores de movimiento del Filosofo
+  let moveLeft = true
+  let moveRight = true
+  let moveUp = true
+  let moveDown = true
+
+  // Dibujos y movimientos
+  const width = canvas.width // -> 900
+  const height = canvas.height // -> 600
+
+  const filosofo = {
+    x: 0,
+    y: 0,
+    width: 80,
+    height: 80,
+    dx: 0,
+    dy: 0,
+    speed: 5,  
+    initialX: 0, 
+    initialY: 0 
+  }
+
+  function events() {
+    document.addEventListener('keydown', (event) => {
+      const { key } = event
+      
+      if (moveRight && key === 'ArrowRight') {
+        filosofo.dx = filosofo.speed
+      }
+      if (moveLeft && key === 'ArrowLeft') {
+        filosofo.dx = -filosofo.speed
+      }
+      if (moveUp && key === 'ArrowUp') {
+        filosofo.dy = -filosofo.speed
+      }
+      if (moveDown && key === 'ArrowDown') {
+        filosofo.dy = filosofo.speed
+      }
+    })
+
+    document.addEventListener('keyup', (event) => {
+      const { key } = event
+
+      if (key === 'ArrowRight' || key === 'ArrowLeft') {
+
+        filosofo.dx = 0
+      }
+
+      if (key === 'ArrowUp' || key === 'ArrowDown') {
+        filosofo.dy = 0
+      }
+    })
+  }
+
+  const villans = [
+    { x: 100, y: 100, width: 80, height: 80, dx: 2, dy: 2 },
+    { x: 200, y: 200, width: 80, height: 80, dx: -2, dy: 2 },
+    { x: 300, y: 300, width: 80, height: 80, dx: 2, dy: -2 },
+    { x: 400, y: 400, width: 80, height: 80, dx: -2, dy: -2 },
+    { x: 500, y: 500, width: 80, height: 80, dx: 2, dy: 2},
+    { x: 600, y: 600, width: 80, height: 80, dx: -2, dy: 2 },
+    { x: 700, y: 700, width: 80, height: 80, dx: 2, dy: -2 },
+  ]
+
+  const villansPar = villans.filter((villan) => villan.dx > 0)
+
+  const cofres = [
+    { x: width / 2, y: 0, width: 50, height: 50, open: false },
+    { x: width / 2, y: height / 2, width: 50, height: 50, open: false },
+    { x: width / 2, y: height - 60, width: 50, height: 50, open: false },
+    { x: 0, y: height / 2, width: 50, height: 50, open: false},
+    { x: 0, y: height - 60, width: 50, height: 50, open: false },
+    { x: width - 60, y: 0, width: 50, height: 50, open: false },
+    { x: width - 60, y: height / 2, width: 50, height: 50, open: false },
+    { x: width - 60, y: height - 60, width: 50, height: 50, open: false }
+  ]
+
+  // Imagenes
+  const filosofoImage = new Image()
+  filosofoImage.src = `/img/${secondName}/${secondName}-image-presentation.webp`
+
+  const cofreImage = new Image()
+  cofreImage.src = '/img/Recursos/answer-box-2.webp'
+
+  const cofreOpenImage = new Image()
+  cofreOpenImage.src = '/img/Recursos/answer-box-2-open.webp'
+
+  const villanImage = new Image()
+  villanImage.src = '/img/Recursos/Villan-1-1.webp'
+
+  const villanImage2 = new Image()
+  villanImage2.src = '/img/Recursos/Villan-2-2.webp'
+
+  const villanImage3 = new Image()
+  villanImage3.src = '/img/Recursos/Villan-3-3.webp'
+
+  const villanImage4 = new Image()
+  villanImage4.src = `/img/${secondName}/${secondName}-image-presentation.webp`
+
+  function drawFilosofo() {
+    ctx?.drawImage(filosofoImage, filosofo.x, filosofo.y, filosofo.width, filosofo.height)
+  }
+
+  function drawCofres() {
+    cofres.forEach(cofre => {
+      if (cofre.open) {
+        ctx?.drawImage(cofreOpenImage, cofre.x, cofre.y, cofre.width, cofre.height)
+      } else {
+        ctx?.drawImage(cofreImage, cofre.x, cofre.y, cofre.width, cofre.height)
+      }
+    })
+  }
+
+  function drawVillans() {
+    if (levelGame === 2) {
+      villans.forEach(villan => {
+        ctx?.drawImage(villanImage2, villan.x, villan.y, villan.width, villan.height)
+      })
+    } else if (levelGame === 1){
+      villans.forEach(villan => {
+        ctx?.drawImage(villanImage, villan.x, villan.y, villan.width, villan.height)
+      })
+    } else if (levelGame === 3) {  
+      villans.forEach(villan => {
+        ctx?.drawImage(villanImage3, villan.x, villan.y, villan.width, villan.height)
+      })
+    } else if (levelGame === 4) {
+      villans.forEach(villan => {
+        ctx?.drawImage(villanImage4, villan.x, villan.y, villan.width, villan.height)
+      })
+    }
+  }
+
+  function villansMovements() {
+    villans.forEach(villan => {
+      villan.x += villan.dx
+      villan.y += villan.dy
+
+      if (villan.x + villan.width > width || villan.x < 0) {
+        villan.dx *= -1
+      }
+      if (villan.y + villan.height > height || villan.y < 0) {
+        villan.dy *= -1
+      }
+    })
+  }
+
+  function cleanCanvas() {
+    ctx?.clearRect(0, 0, width, height)
+  }
+
+  function updatePosition() {
+    filosofo.x += filosofo.dx
+    filosofo.y += filosofo.dy
+
+    // Limites del canvas
+    if (filosofo.x < 0) filosofo.x = 0
+    if (filosofo.x + filosofo.width > width) filosofo.x = width - filosofo.width
+    if (filosofo.y < 0) filosofo.y = 0
+    if (filosofo.y + filosofo.height > height) filosofo.y = height - filosofo.height
+  }
+
+  function detectCollision() {
+    villans.forEach(villan => {
+      if (filosofo.x < villan.x + villan.width &&
+          filosofo.x + filosofo.width > villan.x &&
+          filosofo.y < villan.y + villan.height &&
+          filosofo.y + filosofo.height > villan.y) {
+        filosofo.x = filosofo.initialX
+        filosofo.y = filosofo.initialY
+      }
+    })
+
+    if (cofres.every((cofre) => cofre.open)) {
+      villans.length = 2
+    }
+
+    cofres.forEach((cofre, index) => {  
+      if (cofre.open) return
+
+      if (filosofo.x < cofre.x + cofre.width &&
+          filosofo.x + filosofo.width > cofre.x &&
+          filosofo.y < cofre.y + cofre.height &&
+          filosofo.y + filosofo.height > cofre.y) {
+            moveLeft = false
+            moveRight = false
+            moveUp = false
+            moveDown = false
+
+            villansPar.forEach(villan => {
+              villan.dx = 3
+              villan.dy = -3
+            })
+            showModal(index)
+
+            if (!cofre.open) {
+              openCofres++
+              cofre.open = true
+              /* villans.push({ x: Math.random() * width, y: Math.random() * height, width: 80, height: 80, dx: 2, dy: 2 }) */
+            }
+
+            $textOpenCofres.innerHTML = openCofres.toString()
+
+            if (openCofres === limitCofres) {
+              confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                shapes: ['star']
+              })
+              restartGame()
+            }
+
+            filosofo.x = filosofo.initialX
+            filosofo.y = filosofo.initialY
+      }
+    })
+  }
+
+  function restartGame() {
+    cofres.forEach(cofre => cofre.open = false)
+    levelGame++
+    if (levelGame > 1) {
+      villans.length = 4
+      $textLevel.innerHTML = levelGame.toString()
+      $textOpenCofres.innerHTML = openCofres.toString()
+    } else {
+      levelGame = 1
+    }
+    openCofres = 0
+    allCofresOpen = false
+    moveLeft = true
+    moveRight = true
+    moveUp = true
+    moveDown = true
+  }
+
+  function draw() {
+    cleanCanvas()
+    updatePosition()
+    drawFilosofo()
+    drawCofres()
+    drawVillans()
+    villansMovements()
+    detectCollision()
+    window.requestAnimationFrame(draw)
+  }
+
+  function showModal (index: number) {
+    $modal.showModal()
+
+    $textShowing.innerHTML = phrasesArray?.at(index) ?? ''
+    
+    $buttonClose.onclick = () => {
+      $modal.close()
+      moveLeft = true
+      moveRight = true
+      moveUp = true
+      moveDown = true
+    }
+  }
+
+  events()
+  draw()
+</script>

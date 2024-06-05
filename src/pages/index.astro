@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Footer from '../components/Footer.astro'
+import SelectYourCharacter from '../components/SelectYourCharacter.astro'
+---
+
+<Layout title="Juego de Filosofos">
+
+	<main class="flex flex-col justify-center items-center">
+		<h1 class="text-3xl sm:text-5xl text-pink-400/90 font-bold text-center"> Selecciona a uno </h1>
+
+		<SelectYourCharacter />
+
+		<Footer />
+	</main>
+</Layout>
