@@ -19,160 +19,59 @@ interface Questions {
 
 export const filosofos: Filosofos[] = [
   {
-    id: 'filosofa-margarita-porete',
-    name: 'Margarita Porete',
-    imagePresentation: '/img/Porete/Porete-image-presentation.webp',
-    imageSmall: '/img/Porete/Porete-image-small.webp',
+    id: 'filosofa-nicolas-maquiavelo',
+    name: 'Nicolas Maquiavelo',
+    imagePresentation: '/img/Maquiavelo/Maquiavelo-image-presentation.webp',
+    imageSmall: '/img/Maquiavelo/Maquiavelo-image-small.webp',
     topic: 'Empirismo',
-    escenaryImage1: '/img/Porete/escenary-1.webp',
-    escenaryImage2: '/img/Porete/escenary-2.webp',
-    phrases: [
-      {
-        question: '¿Qué es la filosofía según Locke?',
-        options: [
-          'Es el estudio de la realidad',
-          'Es el estudio de la mente',
-          'Es el estudio de la moral',
-          'Es el estudio de la política'
-        ],
-        answer: 'Es el estudio de la mente'
-      },
-      {
-        question: '¿Qué es la mente según Locke?',
-        options: [
-          'Es un tabula rasa',
-          'Es una sustancia inmaterial',
-          'Es una sustancia material',
-          'Es una sustancia espiritual'
-        ],
-        answer: 'Es un tabula rasa'
-      },
-      {
-        question: '¿Qué es la idea según Locke?',
-        options: [
-          'Es una representación de la realidad',
-          'Es una representación de la mente',
-          'Es una representación de la moral',
-          'Es una representación de la política'
-        ],
-        answer: 'Es una representación de la realidad'
-      }
-    ],
+    escenaryImage1: '/img/Maquiavelo/escenary-1.webp',
+    escenaryImage2: '/img/Maquiavelo/escenary-2.webp',
     phrases2: [
-      'La razón humana es la única que produce religión y ciencia. ambas. A partir de los mismos principios.',
-      'La ilustración es la salida del hombre de su autoculpable inmadurez.',
-      'Obra solo según una máxima tal que puedas querer al mismo tiempo que se torne en ley universal.',
-      'La moral no se enseña; se aprende por uno mismo.',
-      'El espacio y el tiempo son formas de nuestra sensibilidad, son condiciones necesarias bajo las cuales se nos presentan los objetos externos.',
-      'La libertad es aquella facultad que aumenta la utilidad de todas las demás facultades.',
-      'El deber es la necesidad de actuar por respeto a la ley.',
-      'La experiencia sin teoría es ciega. pero la teoría sin experiencia es un mero juego intelectual.'
+      'El fin justifica los medios.',
+      'Es mejor ser temido que amado. si no se puede ser ambos.',
+      'Los hombres olvidan más rápido la muerte de su padre que la pérdida de su patrimonio.',
+      'El que sube al poder por la ayuda de los demás. llega al poder por la ayuda de los demás. pero el que llega al poder por su propia fuerza. se mantiene en el poder por su propia fuerza.',
+      'Los hombres deben ser estimulados o disuadidos de obrar bien o mal no por una virtud que no poseen. sino por la que poseen.',
+      'Los hombres se muestran menos precavidos en el mal que en el bien. y cuando reciben un mal trato de alguien. buscan la venganza más que cuando reciben un beneficio.',
+      'Los hombres rara vez se reconocen méritos por tener obrado bien. pero se justifican por no haber obrado mal.',
+      'La naturaleza del hombre es tal que lo lleva a donde su juicio le permite. y que el juzgar bien o mal del hecho depende del poder o fortuna.'
     ]
   },
   
   {
-    id: 'filosofa-christine-de-pizan',
-    name: 'Christine de Pizan',
-    imagePresentation: '/img/Pizan/Pizan-image-presentation.webp',
-    imageSmall: '/img/Pizan/Pizan-image-small.webp',
+    id: 'filosofa-erasmus-roterodamus',
+    name: 'Erasmus Roterodamus',
+    imagePresentation: '/img/Roterodamus/Roterodamus-image-presentation.webp',
+    imageSmall: '/img/Roterodamus/Roterodamus-image-small.webp',
     topic: 'Racionalismo',
-    escenaryImage1: '/img/Pizan/escenary-3.webp',
-    phrases: [
-      {
-        question: '¿Qué es la filosofía según Descartes?',
-        options: [
-          'Cogito. ergo sum" ("Pienso, luego existo").',
-          'Daría todo lo que sé. por la mitad de lo que ignoro.',
-          'El buen sentido es la cosa mejor repartida del mundo; porque cada uno piensa estar tan bien provisto de él.',
-          'Para investigar la verdad es preciso dudar. en cuanto sea posible. de todas las cosas.',
-          'Leer todos los buenos libros es como una conversación con las mejores mentes de los siglos pasados.',
-          'La filosofía es la que nos distingue de los salvajes y bárbaros; las naciones son tanto más civilizadas y cultas cuanto mejor filosofan sus hombres.',
-          'Dividir cada una de las dificultades que se examinan en tantas partes como sea posible y en cuantas requiera su mejor solución.',
-          'No hay nada repartido de modo más equitativo que la razón: todo el mundo está convencido de tener suficiente.'
-        ],
-        answer: 'Es el estudio de la mente'
-      },
-      {
-        question: '¿Qué es la mente según Descartes?',
-        options: [
-          'Es un tabula rasa',
-          'Es una sustancia inmaterial',
-          'Es una sustancia material',
-          'Es una sustancia espiritual'
-        ],
-        answer: 'Es una sustancia inmaterial'
-      },
-      {
-        question: '¿Qué es la idea según Descartes?',
-        options: [
-          'Es una representación de la realidad',
-          'Es una representación de la mente',
-          'Es una representación de la moral',
-          'Es una representación de la política'
-        ],
-        answer: 'Es una representación de la realidad'
-      }
-    ],
+    escenaryImage1: '/img/Roterodamus/escenary-3.webp',
     phrases2: [
-      'La razón humana es la única que produce religión y ciencia. ambas. A partir de los mismos principios.',
-      'La ilustración es la salida del hombre de su autoculpable inmadurez.',
-      'Obra solo según una máxima tal que puedas querer al mismo tiempo que se torne en ley universal.',
-      'La moral no se enseña; se aprende por uno mismo.',
-      'El espacio y el tiempo son formas de nuestra sensibilidad, son condiciones necesarias bajo las cuales se nos presentan los objetos externos.',
-      'La libertad es aquella facultad que aumenta la utilidad de todas las demás facultades.',
-      'El deber es la necesidad de actuar por respeto a la ley.',
-      'La experiencia sin teoría es ciega. pero la teoría sin experiencia es un mero juego intelectual.'
+      'La paz más desventajosa es mejor que la guerra más justa.',
+      'En el país de los ciegos. el tuerto es el rey.',
+      'La verdadera filosofía es la que enseña a vivir bien. no a discurrir con sutileza.',
+      'La prevención de males es casi siempre preferible a su corrección.',
+      'El que conoce el arte de vivir consigo mismo ignora el aburrimiento.',
+      'La felicidad consiste. principalmente. en conformarse con la propia suerte. es querer ser lo que uno es.',
+      'Cuanto más se lee. más se aprende y menos se imita.',
+      'La educación es la mejor provisión para la vejez.'
     ]
   }, 
 
   {
-    id: 'filosofo-Immanuel-Kant',
-    name: 'Immanuel Kant',
-    imagePresentation: '/img/Kant/Kant-image-presentation.webp',
-    imageSmall: '/img/Kant/Kant-image-small.webp',
+    id: 'filosofo-nicolas-cusa',
+    name: 'Nicolas de Cusa',
+    imagePresentation: '/img/Cusa/Cusa-image-presentation.webp',
+    imageSmall: '/img/Cusa/Cusa-image-small.webp',
     topic: 'cristicismo',
-    escenaryImage1: '/img/Porete/escenary-2.webp',
-    phrases: [
-      {
-        question: '¿Qué es la filosofía según Kant?',
-        options: [
-          'Es el estudio de la realidad',
-          'Es el estudio de la mente',
-          'Es el estudio de la moral',
-          'Es el estudio de la política'
-        ],
-        answer: 'Es el estudio de la moral'
-      },
-      {
-        question: '¿Qué es la mente según Kant?',
-        options: [
-          'Es un tabula rasa',
-          'Es una sustancia inmaterial',
-          'Es una sustancia material',
-          'Es una sustancia espiritual'
-        ],
-        answer: 'Es una sustancia inmaterial'
-      },
-      {
-        question: '¿Qué es la idea según Kant?',
-        options: [
-          'Es una representación de la realidad',
-          'Es una representación de la mente',
-          'Es una representación de la moral',
-          'Es una representación de la política'
-        ],
-        answer: 'Es una representación de la realidad'
-      }
-    ],
+    escenaryImage1: '/img/Maquiavelo/escenary-2.webp',
     phrases2: [
-      'La razón humana es la única que produce religión y ciencia. ambas. A partir de los mismos principios.',
-      'La ilustración es la salida del hombre de su autoculpable inmadurez.',
-      'Obra solo según una máxima tal que puedas querer al mismo tiempo que se torne en ley universal.',
-      'La moral no se enseña; se aprende por uno mismo.',
-      'El espacio y el tiempo son formas de nuestra sensibilidad, son condiciones necesarias bajo las cuales se nos presentan los objetos externos.',
-      'La libertad es aquella facultad que aumenta la utilidad de todas las demás facultades.',
-      'El deber es la necesidad de actuar por respeto a la ley.',
-      'La experiencia sin teoría es ciega. pero la teoría sin experiencia es un mero juego intelectual.'
+      'La ética no es solo un conjunto de normas. sino un modo de ser y estar en el mundo. una forma de construir comunidad.',
+      'La verdadera libertad no radica en la ausencia de restricciones. sino en la capacidad de autodeterminación y en la creación de condiciones para la realización personal y colectiva.',
+      'El desafío de la filosofía contemporánea es dialogar con la diversidad de perspectivas sin perder de vista la búsqueda de la verdad y el bien común.',
+      'La justicia social no es un ideal utópico. sino una meta alcanzable a través del compromiso y la acción solidaria.',
+      'La política. entendida en su sentido más profundo. es el arte de vivir juntos. de construir juntos un mundo en el que todos puedan florecer.',
+      'La identidad no es una esencia fija. sino un proceso dinámico de construcción y reconstrucción en relación con los otros.',
+      'El conocimiento no debe ser un privilegio de unos pocos. sino un derecho fundamental de todos los seres humanos.'
     ]
   },
   {
@@ -182,38 +81,6 @@ export const filosofos: Filosofos[] = [
     imageSmall: '/img/Platon/Platon-image-small.webp',
     topic: 'Racionalismo',
     escenaryImage1: '/img/Platon/escenary-1.webp',
-    phrases: [
-      {
-        question: '¿Qué es la filosofía según Platón?',
-        options: [
-          'Es el estudio de la realidad',
-          'Es el estudio de la mente',
-          'Es el estudio de la moral',
-          'Es el estudio de la política'
-        ],
-        answer: 'Es el estudio de la realidad'
-      },
-      {
-        question: '¿Qué es la mente según Platón?',
-        options: [
-          'Es un tabula rasa',
-          'Es una sustancia inmaterial',
-          'Es una sustancia material',
-          'Es una sustancia espiritual'
-        ],
-        answer: 'Es una sustancia inmaterial'
-      },
-      {
-        question: '¿Qué es la idea según Platón?',
-        options: [
-          'Es una representación de la realidad',
-          'Es una representación de la mente',
-          'Es una representación de la moral',
-          'Es una representación de la política'
-        ],
-        answer: 'Es una representación de la realidad'
-      }
-    ],
     phrases2: [
       'La razón humana es la única que produce religión y ciencia. ambas. A partir de los mismos principios.',
       'La ilustración es la salida del hombre de su autoculpable inmadurez.',
